@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
+    elevation: 0,
   },
   logoIcon: {
     fontSize: 40,
@@ -186,18 +187,21 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#ffffff',
     letterSpacing: 0.5,
+    elevation: 0,
   },
   title: {
     fontSize: 32,
     fontWeight: '700',
     color: '#ffffff',
     marginBottom: 8,
+    elevation: 0,
   },
   subtitle: {
     fontSize: 16,
     fontWeight: '400',
     color: '#a1a5b4',
     marginBottom: 32,
+    elevation: 0,
   },
   form: {
     gap: 20,
@@ -241,14 +245,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     marginTop: 16,
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  buttonContent: {
-    paddingVertical: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   buttonText: {
     color: '#ffffff',
