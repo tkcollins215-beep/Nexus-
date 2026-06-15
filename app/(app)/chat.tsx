@@ -6,6 +6,7 @@ import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { useAuth } from "@/context/AuthContext";
 import { conversationsApi } from "@/utils/api";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -156,7 +157,12 @@ export default function ChatScreen() {
   }
 
   return (
-    <View style={styles.gradient}>
+    <LinearGradient
+      colors={["#1a0f3f", "#2d1b69", "#1a0f3f"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.gradient}
+    >
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.header}>
           <ScreenHeader title={title ?? "Chat"} />
@@ -181,7 +187,7 @@ export default function ChatScreen() {
         >
           {isLoading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#00A884" />
+              <ActivityIndicator size="large" color="#A855F7" />
             </View>
           ) : messages.length === 0 ? (
             <View style={styles.emptyContainer}>
@@ -221,14 +227,13 @@ export default function ChatScreen() {
           }}
         />
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
-    backgroundColor: "#EAE6DB",
   },
   container: {
     flex: 1,
@@ -238,9 +243,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#00A884",
     paddingHorizontal: 16,
     paddingVertical: 10,
+    backgroundColor: "transparent",
   },
   headerActions: {
     flexDirection: "row",
@@ -272,7 +277,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#00A884",
+    backgroundColor: "rgba(168, 85, 247, 0.2)",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
@@ -283,12 +288,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#111B21",
+    color: "#FFFFFF",
     marginBottom: 8,
   },
   emptyText: {
     fontSize: 15,
-    color: "#3B4A54",
+    color: "#A1A5B4",
     textAlign: "center",
   },
 });

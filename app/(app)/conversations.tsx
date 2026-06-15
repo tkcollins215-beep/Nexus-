@@ -1,21 +1,20 @@
 import { ConversationItem } from "@/components/chat/ConversationItem";
 import { Avatar } from "@/components/ui/Avatar";
-import { AppTheme } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { conversationsApi } from "@/utils/api";
+import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useFocusEffect } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList,
-    RefreshControl,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -76,9 +75,13 @@ export default function ConversationsScreen() {
   );
 
   return (
-    <View style={styles.gradient}>
+    <LinearGradient
+      colors={["#1a0f3f", "#2d1b69", "#1a0f3f"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.gradient}
+    >
       <SafeAreaView style={styles.container} edges={["top"]}>
-        {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
@@ -109,21 +112,13 @@ export default function ConversationsScreen() {
                   color="#FFFFFF"
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.iconButton}>
-                <MaterialCommunityIcons
-                  name="qrcode-scan"
-                  size={22}
-                  color="#FFFFFF"
-                />
-              </TouchableOpacity>
             </View>
           </View>
         </View>
 
-        {/* Conversations List */}
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={AppTheme.colors.primary} />
+            <ActivityIndicator size="large" color="#A855F7" />
           </View>
         ) : conversations.length === 0 ? (
           <View style={styles.emptyContainer}>
@@ -151,31 +146,30 @@ export default function ConversationsScreen() {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={handleRefresh}
-                tintColor={AppTheme.colors.primary}
-                colors={[AppTheme.colors.primary]}
+                tintColor="#A855F7"
+                colors={["#A855F7"]}
               />
             }
             scrollEventThrottle={16}
           />
         )}
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
-    backgroundColor: "#EAE6DB",
   },
   container: {
     flex: 1,
-    backgroundColor: "#EAE6DB",
+    backgroundColor: "transparent",
   },
   header: {
-    backgroundColor: "#00A884",
     paddingHorizontal: 16,
     paddingVertical: 10,
+    backgroundColor: "transparent",
   },
   headerContent: {
     flexDirection: "row",
@@ -204,7 +198,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "rgba(255,255,255,0.2)",
+    backgroundColor: "rgba(255,255,255,0.1)",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -228,7 +222,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#00A884",
+    backgroundColor: "rgba(168, 85, 247, 0.2)",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
@@ -239,17 +233,17 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#111B21",
+    color: "#FFFFFF",
     marginBottom: 8,
   },
   emptyText: {
     fontSize: 15,
-    color: "#3B4A54",
+    color: "#A1A5B4",
     marginBottom: 20,
     textAlign: "center",
   },
   emptyButton: {
-    backgroundColor: "#00A884",
+    backgroundColor: "#A855F7",
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 20,

@@ -1,7 +1,3 @@
-import { AppTheme } from "@/constants/theme";
-import { useAuth } from "@/context/AuthContext";
-import * as ImagePicker from "expo-image-picker";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -14,9 +10,11 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function CreateStatusScreen() {
-  const { state } = useAuth();
   const [caption, setCaption] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -62,13 +60,17 @@ export default function CreateStatusScreen() {
       Alert.alert("Error", "Please add an image or caption");
       return;
     }
-    // In a real app, this would upload to the server
     Alert.alert("Success", "Status posted!");
     router.back();
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={["#1a0f3f", "#2d1b69", "#1a0f3f"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.container}
+    >
       <SafeAreaView edges={["top"]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
@@ -88,18 +90,18 @@ export default function CreateStatusScreen() {
           <Image source={{ uri: selectedImage }} style={styles.preview} />
         ) : (
           <View style={styles.placeholder}>
-            <MaterialCommunityIcons name="camera-plus" size={64} color="#00A884" />
+            <MaterialCommunityIcons name="camera-plus" size={64} color="#A855F7" />
             <Text style={styles.placeholderText}>Add photo/video</Text>
           </View>
         )}
 
         <View style={styles.actions}>
           <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
-            <MaterialCommunityIcons name="image" size={24} color="#00A884" />
+            <MaterialCommunityIcons name="image" size={24} color="#A855F7" />
             <Text style={styles.actionText}>Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} onPress={takePhoto}>
-            <MaterialCommunityIcons name="camera" size={24} color="#00A884" />
+            <MaterialCommunityIcons name="camera" size={24} color="#A855F7" />
             <Text style={styles.actionText}>Camera</Text>
           </TouchableOpacity>
         </View>
@@ -107,20 +109,19 @@ export default function CreateStatusScreen() {
         <TextInput
           style={styles.captionInput}
           placeholder="Add caption..."
-          placeholderTextColor="#667781"
+          placeholderTextColor="#9CA3AF"
           value={caption}
           onChangeText={setCaption}
           multiline
         />
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
   },
   header: {
     flexDirection: "row",
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: "#00A884",
   },
   title: {
     fontSize: 18,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   postButton: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF",
+    color: "#A855F7",
   },
   postButtonDisabled: {
     opacity: 0.5,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   actionButton: {
     alignItems: "center",
     padding: 16,
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "rgba(168, 85, 247, 0.15)",
     borderRadius: 12,
   },
   actionText: {
@@ -183,6 +183,6 @@ const styles = StyleSheet.create({
     padding: 16,
     color: "#FFFFFF",
     fontSize: 16,
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "rgba(168, 85, 247, 0.15)",
   },
 });
