@@ -246,6 +246,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 16,
   },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
+  buttonContent: {
+    paddingVertical: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
