@@ -10,6 +10,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
     ActivityIndicator,
+    Alert,
     FlatList,
     Keyboard,
     KeyboardAvoidingView,
@@ -80,6 +81,23 @@ export default function ChatScreen() {
       await conversationsApi.markAsRead(conversationId);
     } catch (error) {
       console.error("Failed to send message:", error);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const handleSendAudio = async (uri: string, duration: string) => {
+    try {
+      setIsSending(true);
+      const response = await conversationsApi.sendAudioMessage(
+        conversationId,
+        uri,
+        duration,
+      );
+      setMessages((prev) => [...prev, response.data]);
+      await conversationsApi.markAsRead(conversationId);
+    } catch (error) {
+      Alert.alert("Error", "Failed to send voice message");
     } finally {
       setIsSending(false);
     }
