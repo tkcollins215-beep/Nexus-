@@ -103,11 +103,6 @@ export function MessageBubble({
               {message.content}
             </Text>
           ) : null}
-          {isBookmarked && (
-            <View style={styles.bookmarkBadge}>
-              <Text style={styles.bookmarkEmoji}>📌</Text>
-            </View>
-          )}
         </View>
         {showActions && (
           <MessageActions
@@ -149,9 +144,9 @@ export function MessageBubble({
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 6,
-    marginHorizontal: AppTheme.spacing.md,
-    maxWidth: "82%",
+    marginVertical: 4,
+    marginHorizontal: 8,
+    maxWidth: "78%",
   },
   wrapperOwn: {
     alignSelf: "flex-end",
@@ -163,15 +158,15 @@ const styles = StyleSheet.create({
   },
   senderName: {
     fontSize: 12,
-    fontWeight: "600",
-    color: AppTheme.colors.primary,
-    marginBottom: 4,
-    marginLeft: 4,
+    fontWeight: "500",
+    color: "#00A884",
+    marginBottom: 2,
+    marginLeft: 12,
   },
   bubbleContainer: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    gap: AppTheme.spacing.sm,
+    alignItems: "flex-end",
+    gap: 4,
   },
   containerOwn: {
     justifyContent: "flex-end",
@@ -180,62 +175,49 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   bubble: {
-    borderRadius: AppTheme.radius.lg,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    ...AppTheme.shadow.card,
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minWidth: 40,
   },
   bubbleOwn: {
-    backgroundColor: AppTheme.colors.primary,
+    backgroundColor: AppTheme.colors.chatOwn,
     borderBottomRightRadius: 4,
   },
   bubbleOther: {
-    backgroundColor: AppTheme.colors.surface,
+    backgroundColor: AppTheme.colors.chatOther,
     borderBottomLeftRadius: 4,
-    borderWidth: 1,
-    borderColor: AppTheme.colors.border,
   },
   text: {
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 20,
     fontWeight: "400",
   },
   textOwn: {
-    color: AppTheme.colors.textInverse,
+    color: "#E9EDEF",
   },
   textOther: {
-    color: AppTheme.colors.text,
+    color: "#111B21",
   },
   messageImage: {
-    width: 200,
-    height: 200,
-    borderRadius: AppTheme.radius.md,
-    marginBottom: 6,
-  },
-  bookmarkBadge: {
-    position: "absolute",
-    top: -8,
-    right: -8,
-    backgroundColor: AppTheme.colors.textInverse,
-    borderRadius: 20,
-    padding: 4,
-    ...AppTheme.shadow.button,
-  },
-  bookmarkEmoji: {
-    fontSize: 16,
-  },
-  metaContainer: {
-    marginTop: AppTheme.spacing.xs,
-    gap: AppTheme.spacing.xs,
+    width: 220,
+    height: 220,
+    borderRadius: 12,
+    marginBottom: 4,
   },
   timestamp: {
     fontSize: 11,
+    color: "rgba(255,255,255,0.7)",
+    marginTop: 2,
+    marginHorizontal: 8,
+    alignSelf: "flex-end",
+  },
+  timestampOther: {
     color: AppTheme.colors.textMuted,
-    marginTop: 6,
-    marginHorizontal: 4,
   },
   timestampOwn: {
     textAlign: "right",
+    color: "rgba(233,237,239,0.8)",
   },
   editedLabel: {
     fontSize: 10,

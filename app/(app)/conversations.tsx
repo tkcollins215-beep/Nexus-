@@ -76,12 +76,7 @@ export default function ConversationsScreen() {
   );
 
   return (
-    <LinearGradient
-      colors={["#f8fafc", "#f1f5f9"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}
-    >
+    <View style={styles.gradient}>
       <SafeAreaView style={styles.container} edges={["top"]}>
         {/* Header */}
         <View style={styles.header}>
@@ -90,11 +85,10 @@ export default function ConversationsScreen() {
               <Avatar
                 name={state.user?.username ?? "You"}
                 uri={state.user?.avatar}
-                size={44}
+                size={40}
               />
               <View style={styles.userInfo}>
                 <Text style={styles.greeting}>Nexus</Text>
-                <Text style={styles.subtitle}>Messages</Text>
               </View>
             </View>
             <View style={styles.headerActions}>
@@ -105,14 +99,21 @@ export default function ConversationsScreen() {
                 <MaterialCommunityIcons
                   name="plus"
                   size={24}
-                  color={AppTheme.colors.primary}
+                  color="#FFFFFF"
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.iconButton}>
                 <MaterialCommunityIcons
                   name="magnify"
-                  size={24}
-                  color={AppTheme.colors.primary}
+                  size={22}
+                  color="#FFFFFF"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                <MaterialCommunityIcons
+                  name="qrcode-scan"
+                  size={22}
+                  color="#FFFFFF"
                 />
               </TouchableOpacity>
             </View>
@@ -158,21 +159,23 @@ export default function ConversationsScreen() {
           />
         )}
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
+    backgroundColor: "#EAE6DB",
   },
   container: {
     flex: 1,
+    backgroundColor: "#EAE6DB",
   },
   header: {
-    paddingHorizontal: AppTheme.spacing.lg,
-    paddingVertical: AppTheme.spacing.md,
-    backgroundColor: "transparent",
+    backgroundColor: "#00A884",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
   headerContent: {
     flexDirection: "row",
@@ -182,38 +185,33 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: AppTheme.spacing.md,
     flex: 1,
   },
   userInfo: {
     justifyContent: "center",
+    marginLeft: 12,
   },
   greeting: {
-    ...AppTheme.typography.title,
-    color: AppTheme.colors.text,
-    marginBottom: 2,
-  },
-  subtitle: {
-    ...AppTheme.typography.caption,
-    color: AppTheme.colors.textSecondary,
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#FFFFFF",
   },
   headerActions: {
     flexDirection: "row",
-    gap: AppTheme.spacing.md,
+    gap: 8,
   },
   iconButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: AppTheme.colors.surface,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.2)",
     justifyContent: "center",
     alignItems: "center",
-    ...AppTheme.shadow.card,
   },
   listContainer: {
-    paddingHorizontal: AppTheme.spacing.md,
-    paddingVertical: AppTheme.spacing.sm,
-    gap: AppTheme.spacing.sm,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    flexGrow: 1,
   },
   loadingContainer: {
     flex: 1,
@@ -224,41 +222,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: AppTheme.spacing.lg,
+    paddingHorizontal: 24,
   },
   emptyCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: AppTheme.colors.primaryLight,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: "#00A884",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: AppTheme.spacing.lg,
+    marginBottom: 20,
   },
   emptyIcon: {
-    fontSize: 48,
+    fontSize: 56,
   },
   emptyTitle: {
-    ...AppTheme.typography.title,
-    color: AppTheme.colors.text,
-    marginBottom: AppTheme.spacing.sm,
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#111B21",
+    marginBottom: 8,
   },
   emptyText: {
-    ...AppTheme.typography.body,
-    color: AppTheme.colors.textSecondary,
-    marginBottom: AppTheme.spacing.lg,
+    fontSize: 15,
+    color: "#3B4A54",
+    marginBottom: 20,
     textAlign: "center",
   },
   emptyButton: {
-    backgroundColor: AppTheme.colors.primary,
-    paddingHorizontal: AppTheme.spacing.lg,
-    paddingVertical: AppTheme.spacing.md,
-    borderRadius: AppTheme.radius.md,
-    ...AppTheme.shadow.button,
+    backgroundColor: "#00A884",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 20,
   },
   emptyButtonText: {
-    color: AppTheme.colors.textInverse,
-    ...AppTheme.typography.body,
+    color: "#FFFFFF",
+    fontSize: 15,
     fontWeight: "600",
   },
 });

@@ -237,12 +237,7 @@ export default function ChatScreen() {
   }
 
   return (
-    <LinearGradient
-      colors={["#f8fafc", "#f1f5f9"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.gradient}
-    >
+    <View style={styles.gradient}>
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.header}>
           <ScreenHeader title={title ?? "Chat"} />
@@ -254,7 +249,7 @@ export default function ChatScreen() {
               <MaterialCommunityIcons
                 name="magnify"
                 size={24}
-                color={AppTheme.colors.primary}
+                color="#FFFFFF"
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -264,7 +259,7 @@ export default function ChatScreen() {
               <MaterialCommunityIcons
                 name="bell"
                 size={24}
-                color={AppTheme.colors.primary}
+                color="#FFFFFF"
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -274,7 +269,7 @@ export default function ChatScreen() {
               <MaterialCommunityIcons
                 name="bookmark"
                 size={24}
-                color={AppTheme.colors.primary}
+                color="#FFFFFF"
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -284,7 +279,7 @@ export default function ChatScreen() {
               <MaterialCommunityIcons
                 name="checkbox-marked-circle"
                 size={24}
-                color={AppTheme.colors.primary}
+                color="#FFFFFF"
               />
             </TouchableOpacity>
           </View>
@@ -297,7 +292,7 @@ export default function ChatScreen() {
         >
           {isLoading ? (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color={AppTheme.colors.primary} />
+              <ActivityIndicator size="large" color="#00A884" />
             </View>
           ) : messages.length === 0 ? (
             <View style={styles.emptyContainer}>
@@ -333,7 +328,6 @@ export default function ChatScreen() {
           conversationId={conversationId}
           onClose={() => setShowSearch(false)}
           onResultPress={(messageId) => {
-            // Scroll to message (would need message position tracking)
             setShowSearch(false);
           }}
         />
@@ -355,13 +349,14 @@ export default function ChatScreen() {
           onClose={() => setShowActionItems(false)}
         />
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   gradient: {
     flex: 1,
+    backgroundColor: "#EAE6DB",
   },
   container: {
     flex: 1,
@@ -371,15 +366,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: AppTheme.spacing.md,
-    paddingVertical: AppTheme.spacing.sm,
+    backgroundColor: "#00A884",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
   headerActions: {
     flexDirection: "row",
-    gap: AppTheme.spacing.sm,
+    gap: 4,
   },
   headerButton: {
-    padding: AppTheme.spacing.sm,
+    padding: 8,
   },
   flex: {
     flex: 1,
@@ -390,9 +386,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   messagesList: {
-    paddingHorizontal: AppTheme.spacing.md,
-    paddingVertical: AppTheme.spacing.md,
-    gap: AppTheme.spacing.sm,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
     flexGrow: 1,
     justifyContent: "flex-end",
   },
@@ -400,27 +395,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: AppTheme.spacing.lg,
   },
   emptyCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: AppTheme.colors.primaryLight,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: "#00A884",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: AppTheme.spacing.lg,
+    marginBottom: 20,
   },
   emptyIcon: {
-    fontSize: 48,
+    fontSize: 56,
   },
   emptyTitle: {
-    ...AppTheme.typography.title,
-    color: AppTheme.colors.text,
-    marginBottom: AppTheme.spacing.sm,
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#111B21",
+    marginBottom: 8,
   },
   emptyText: {
-    ...AppTheme.typography.body,
-    color: AppTheme.colors.textSecondary,
+    fontSize: 15,
+    color: "#3B4A54",
+    textAlign: "center",
   },
 });
