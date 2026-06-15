@@ -16,11 +16,7 @@ export function MessageActions({
   messageId,
   isOwn,
   onReact,
-  onBookmark,
   onReply,
-  onPin,
-  onRemind,
-  isBookmarked = false,
 }) {
   const [showActions, setShowActions] = useState(false);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -73,23 +69,6 @@ export function MessageActions({
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => {
-              onBookmark?.();
-              setShowActions(false);
-            }}
-          >
-            <MaterialCommunityIcons
-              name={isBookmarked ? "bookmark" : "bookmark-outline"}
-              size={20}
-              color={AppTheme.colors.primary}
-            />
-            <Text style={styles.menuText}>
-              {isBookmarked ? "Saved" : "Save"}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
               onReply?.();
               setShowActions(false);
             }}
@@ -100,38 +79,6 @@ export function MessageActions({
               color={AppTheme.colors.primary}
             />
             <Text style={styles.menuText}>Reply</Text>
-          </TouchableOpacity>
-
-          {!isOwn && (
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => {
-                onRemind?.();
-                setShowActions(false);
-              }}
-            >
-              <MaterialCommunityIcons
-                name="bell-outline"
-                size={20}
-                color={AppTheme.colors.primary}
-              />
-              <Text style={styles.menuText}>Remind</Text>
-            </TouchableOpacity>
-          )}
-
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
-              onPin?.();
-              setShowActions(false);
-            }}
-          >
-            <MaterialCommunityIcons
-              name="pin-outline"
-              size={20}
-              color={AppTheme.colors.primary}
-            />
-            <Text style={styles.menuText}>Pin</Text>
           </TouchableOpacity>
         </View>
       )}

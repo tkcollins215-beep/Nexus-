@@ -22,7 +22,6 @@ interface Message {
   isEdited?: boolean;
   editedAt?: string;
   reactions?: Array<{ emoji: string; users: string[] }>;
-  bookmarkedBy?: string[];
   replyCount?: number;
 }
 
@@ -33,11 +32,7 @@ interface MessageBubbleProps {
   currentUserId?: string;
   onThreadPress?: () => void;
   onReact?: (emoji: string) => void;
-  onBookmark?: () => void;
   onReply?: () => void;
-  onPin?: () => void;
-  onRemind?: () => void;
-  isBookmarked?: boolean;
 }
 
 export function MessageBubble({
@@ -47,11 +42,7 @@ export function MessageBubble({
   currentUserId,
   onThreadPress,
   onReact,
-  onBookmark,
   onReply,
-  onPin,
-  onRemind,
-  isBookmarked: propIsBookmarked = false,
 }: MessageBubbleProps) {
   const [showActions, setShowActions] = useState(false);
 
@@ -66,8 +57,6 @@ export function MessageBubble({
     message.mediaUrl &&
     message.mediaType !== "audio" &&
     resolveMediaUrl(message.mediaUrl);
-
-  const isBookmarked = propIsBookmarked || message.bookmarkedBy?.includes(currentUserId || "");
 
   return (
     <Pressable
@@ -109,11 +98,7 @@ export function MessageBubble({
             messageId={message._id}
             isOwn={isOwn}
             onReact={onReact}
-            onBookmark={onBookmark}
             onReply={onReply}
-            onPin={onPin}
-            onRemind={onRemind}
-            isBookmarked={isBookmarked}
           />
         )}
       </View>
@@ -212,9 +197,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     alignSelf: "flex-end",
   },
-  timestampOther: {
-    color: AppTheme.colors.textMuted,
-  },
   timestampOwn: {
     textAlign: "right",
     color: "rgba(233,237,239,0.8)",
@@ -222,5 +204,9 @@ const styles = StyleSheet.create({
   editedLabel: {
     fontSize: 10,
     fontStyle: "italic",
+  },
+  metaContainer: {
+    marginTop: 2,
+    marginLeft: 4,
   },
 });

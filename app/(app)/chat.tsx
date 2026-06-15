@@ -1,21 +1,15 @@
-import { ActionItemsList } from "@/components/chat/ActionItemsList";
-import { BookmarksPanel } from "@/components/chat/BookmarksPanel";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { MessageInput } from "@/components/chat/MessageInput";
-import { RemindersModal } from "@/components/chat/RemindersModal";
 import { SearchBar } from "@/components/chat/SearchBar";
 import { ThreadView } from "@/components/chat/ThreadView";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
-import { AppTheme } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
-import { conversationsApi, getApiErrorMessage } from "@/utils/api";
+import { conversationsApi } from "@/utils/api";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
     ActivityIndicator,
-    Alert,
     FlatList,
     Keyboard,
     KeyboardAvoidingView,
@@ -41,10 +35,7 @@ export default function ChatScreen() {
   const [isSending, setIsSending] = useState(false);
   const [showThreadView, setShowThreadView] = useState(false);
   const [selectedThreadMessageId, setSelectedThreadMessageId] = useState<string | null>(null);
-  const [showBookmarks, setShowBookmarks] = useState(false);
-  const [showReminders, setShowReminders] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [showActionItems, setShowActionItems] = useState(false);
   const flatListRef = useRef<FlatList>(null);
   const insets = useSafeAreaInsets();
 
@@ -94,26 +85,6 @@ export default function ChatScreen() {
     }
   };
 
-  const handleSendAudio = async (uri: string, duration: string) => {
-    try {
-      setIsSending(true);
-      const response = await conversationsApi.sendAudioMessage(
-        conversationId,
-        uri,
-        duration,
-      );
-      setMessages((prev) => [...prev, response.data]);
-      await conversationsApi.markAsRead(conversationId);
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        getApiErrorMessage(error, "Failed to send voice message"),
-      );
-    } finally {
-      setIsSending(false);
-    }
-  };
-
   const handleReactToMessage = async (messageId: string, emoji: string) => {
     try {
       await conversationsApi.addReaction(conversationId, messageId, emoji);
@@ -132,72 +103,6 @@ export default function ChatScreen() {
     }
   };
 
-  const handleBookmarkMessage = async (messageId: string) => {
-    try {
-      await conversationsApi.bookmarkMessage(conversationId, messageId);
-      setMessages((prev) =>
-        prev.map((msg) =>
-          msg._id === messageId
-            ? {
-                ...msg,
-                bookmarkedBy: [...(msg.bookmarkedBy || []), state.user?._id ?? state.user?.id],
-              }
-            : msg,
-        ),
-      );
-    } catch (error) {
-      console.error("Failed to bookmark message:", error);
-    }
-  };
-
-  const handlePinMessage = async (messageId: string) => {
-    try {
-      await conversationsApi.pinMessage(conversationId, messageId);
-      Alert.alert("Success", "Message pinned");
-    } catch (error) {
-      Alert.alert("Error", "Could not pin message");
-    }
-  };
-
-  const handleRemindMessage = async (messageId: string) => {
-    Alert.alert(
-      "Set Reminder",
-      "Remind me in:",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "1 hour",
-          onPress: () => createReminder(messageId, new Date(Date.now() + 3600000)),
-        },
-        {
-          text: "Tomorrow",
-          onPress: () => {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            createReminder(messageId, tomorrow);
-          },
-        },
-        {
-          text: "Next week",
-          onPress: () => {
-            const nextWeek = new Date();
-            nextWeek.setDate(nextWeek.getDate() + 7);
-            createReminder(messageId, nextWeek);
-          },
-        },
-      ],
-    );
-  };
-
-  const createReminder = async (messageId: string, remindAt: Date) => {
-    try {
-      await conversationsApi.createReminder(conversationId, messageId, remindAt.toISOString());
-      Alert.alert("Success", "Reminder set");
-    } catch (error) {
-      Alert.alert("Error", "Could not set reminder");
-    }
-  };
-
   const renderMessage = ({ item }: any) => (
     <MessageBubble
       message={item}
@@ -209,14 +114,10 @@ export default function ChatScreen() {
         setShowThreadView(true);
       }}
       onReact={(emoji) => handleReactToMessage(item._id, emoji)}
-      onBookmark={() => handleBookmarkMessage(item._id)}
       onReply={() => {
         setSelectedThreadMessageId(item._id);
         setShowThreadView(true);
       }}
-      onPin={() => handlePinMessage(item._id)}
-      onRemind={() => handleRemindMessage(item._id)}
-      isBookmarked={item.bookmarkedBy?.includes(state.user?._id ?? state.user?.id)}
     />
   );
 
@@ -248,36 +149,6 @@ export default function ChatScreen() {
             >
               <MaterialCommunityIcons
                 name="magnify"
-                size={24}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setShowReminders(true)}
-              style={styles.headerButton}
-            >
-              <MaterialCommunityIcons
-                name="bell"
-                size={24}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setShowBookmarks(true)}
-              style={styles.headerButton}
-            >
-              <MaterialCommunityIcons
-                name="bookmark"
-                size={24}
-                color="#FFFFFF"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setShowActionItems(true)}
-              style={styles.headerButton}
-            >
-              <MaterialCommunityIcons
-                name="checkbox-marked-circle"
                 size={24}
                 color="#FFFFFF"
               />
@@ -330,23 +201,6 @@ export default function ChatScreen() {
           onResultPress={(messageId) => {
             setShowSearch(false);
           }}
-        />
-
-        <RemindersModal
-          visible={showReminders}
-          onClose={() => setShowReminders(false)}
-        />
-
-        <BookmarksPanel
-          conversationId={conversationId}
-          visible={showBookmarks}
-          onClose={() => setShowBookmarks(false)}
-        />
-
-        <ActionItemsList
-          visible={showActionItems}
-          conversationId={conversationId}
-          onClose={() => setShowActionItems(false)}
         />
       </SafeAreaView>
     </View>
